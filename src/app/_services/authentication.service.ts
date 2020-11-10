@@ -44,15 +44,12 @@ export class AuthenticationService
             role: user.role
         };
         //
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null);
         return this.http.put<any>(`${ config.apiUrl }/audits/${ user.session.id }`, audit)
-            .pipe(
-                map(user =>
-                {
-                    localStorage.removeItem('currentUser');
-                    //
-                    this.currentUserSubject.next(null);
-                    //
-                    return user;
-                }));
+            
+                    
+                    
+                   
     }
 }

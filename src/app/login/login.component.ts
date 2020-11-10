@@ -54,11 +54,19 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.redirectUser(data.role);
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
     }
+
+    redirectUser(userRole) {
+        if (userRole == 'Auditor') {
+          this.router.navigate(['/audit']);
+        } else {
+            this.router.navigate([this.returnUrl]);
+    }
+}
 }

@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { appRoutingModule } from './app.routing';
@@ -11,13 +11,23 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
 import { AuditComponent } from './audit';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { dateFormatPipe } from './_helpers/dateFormat.pipe';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        appRoutingModule
+        appRoutingModule,
+        Ng2OrderModule,
+        Ng2SearchPipeModule,
+        NgxPaginationModule,
+        FormsModule,
+        AngularFontAwesomeModule
     ],
     declarations: [
         AppComponent,
@@ -25,7 +35,8 @@ import { AuditComponent } from './audit';
         LoginComponent,
         RegisterComponent,
         AuditComponent,
-        AlertComponent
+        AlertComponent,
+        dateFormatPipe
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

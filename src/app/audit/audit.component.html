@@ -1,13 +1,57 @@
 <h1>Hi {{currentUser.firstName}}!</h1>
 <p>You're logged in with Angular 8!!</p>
 <h3>All login audit :</h3>
-<ul>
-    <li *ngFor="let audit of audits">
-        <br/><span class="badge badge-primary">{{audit.user}}</span>
-        <br/><span class="badge badge-secondary">{{audit._id}}</span>
-        <br/>Login - {{audit.loginTime}}
-        <br/>Logout - {{audit.logoutTime}}
-        <br/>IP - {{audit.ip}}
-    </li>
 
-</ul>
+<div >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col col-xs-6">
+                            <input type="text" class="form-control" placeholder="Search here..." [(ngModel)]="keyword">
+                        </div>
+                        <div class="col col-xs-6 text-right">
+                            <label>Select Time Format &nbsp;</label>
+                            <select class="form-control-small" [(ngModel)]="format">
+                                <option value="12-hours">12-hours</option>
+                                <option value="24-hours">24-hours</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body table-responsive">
+                    <table class="table table-striped table-bordered table-list">
+                        <thead>
+                            <tr>
+                                <th (click)="sort('_id')">Auditor Id <i class="fa fa-sort"></i></th>
+                                <th (click)="sort('user')">Auditor Name <i class="fa fa-sort"></i></th>
+                                <th (click)="sort('loginTime')">Login Time <i class="fa fa-sort"></i></th>
+                                <th (click)="sort('logoutTime')">Logout Time <i class="fa fa-sort"></i></th>
+                                <th (click)="sort('ip')">IP <i class="fa fa-sort"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let audit of audits | orderBy: key: reverse | filter:keyword | paginate: config">
+                                <td> {{audit._id}} </td>
+                                <td> {{audit.user}} </td>
+                                <td> {{audit.loginTime | dateFormatPipe:format}} </td>
+                                <td> {{audit.logoutTime | dateFormatPipe:format}} </td>
+                                <td> {{audit.ip}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <pagination-controls id="list_pagination" responsive="true" (pageChange)="pageChanged($event)">
+                        </pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
